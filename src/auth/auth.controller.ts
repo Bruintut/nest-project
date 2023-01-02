@@ -2,7 +2,9 @@ import {
     Body,
     Controller,
     Get,
+   
     HttpCode,
+   
     HttpStatus,
     Post,
     UseGuards,
@@ -22,7 +24,7 @@ export class AuthController {
 
  
 
-  @Post() // < Novo Decorator
+  @Post() 
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Login, getting an authentication token',
