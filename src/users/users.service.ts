@@ -1,37 +1,43 @@
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
+import { PrismaService } from "src/database/PrismaService";
 import { CreateUserDto } from "./dto/create-user.dto";
+import * as bcrypt from 'bcrypt';
 import { UserEntity } from "./entities/user.entity";
 
 @Injectable()
 export class UsersService{
 
-    Users= [];
-    constructor(){}
-    async createUser(createUserDto: CreateUserDto){
-        if (!createUserDto){
-            return{
-                message: 'fill in all fields'
-            }
-        }
+    
+    constructor(private readonly prisma: PrismaService){}
+    async createUser(dto: CreateUserDto){
+        const saltOrRounds = 10;
+       const data: UserEntity ={
+        ...dto,
+        password: await bcrypt.hash(dto.password, saltOrRounds)
+       };
 
-        const data: UserEntity ={
-            ...createUserDto,
+       return this.prisma.user.create({
+        data,
+        select:{
+            name: true,
+            email: true,
+            password: false,
         }
-
-        return this.Users.push(data)
+       })
     }
 
     findAllUsers(){
-        return this.Users;
+        return this
+   
     }
 
     findUserById(id: string){
-        return this.Users.findIndex
+        return 
     }
 
     updateUser(id:string, createUserDto: CreateUserDto, user: UserEntity){
-        const data: Partial<UserEntity> = {...createUserDto};
-        return this.Users.splice(0, 1, data);
+
+        return 
     }
 
     removeUser(id:string, user: UserEntity){
