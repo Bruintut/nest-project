@@ -13,6 +13,7 @@ async function bootstrap() {
   .setTitle('Social Media Server')
   .setDescription('A simple social media')
   .setVersion('1.0.0')
+  .addBearerAuth()
   .build()
 
   const document = SwaggerModule.createDocument(app, config);

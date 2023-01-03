@@ -40,7 +40,7 @@ export class UsersController {
 
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  @Get(':id or name')
+  @Get(':id')
   @ApiOperation({
     summary: 'Get a User by ID',
   })
