@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { UserEntity } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { handleError } from 'src/utils/handle-error.utils';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +24,7 @@ export class UsersService {
         email: true,
         password: false,
       },
-    });
+    }).catch(handleError);
   }
 
   findAllUsers() {
@@ -49,7 +50,7 @@ export class UsersService {
     return this.prisma.user.update({
         where:{id},
         data,
-    })
+    }).catch(handleError)
   }
 
   async removeUser(id: string, user: UserEntity) {
